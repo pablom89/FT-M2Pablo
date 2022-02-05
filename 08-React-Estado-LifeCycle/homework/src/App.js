@@ -8,7 +8,8 @@ function App(){
   function onSearch(ciudad) {
     //Acá habría que hacer el llamado a la API para obtener los datos de la ciudad
     //pero de momento agregaremos una ciudad por default para ver que funcione
-    var apiKey = 'cde99c503e3151a769c177d79763d46e';
+    var apiKey = '0e78152cb9c1b723e06bf55643633fd5';
+    //var apiKey = 'cde99c503e3151a769c177d79763d46e';
     fetch(`http://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=${apiKey}`)
       .then(r => r.json())
       .then((recurso) => {

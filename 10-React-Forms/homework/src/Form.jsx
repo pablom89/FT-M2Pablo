@@ -1,14 +1,12 @@
 import React from "react";
-import {Button,Form as FormB} from "react-bootstrap";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
 export function validate(input){
   
   let errors = {};
   if (!input.username) {
     errors.username = 'Username is required'
   }else if(!/\S+@\S+\.\S+/.test(input.username)){
-    errors.username = 'Username is invalid';
+    errors.username = 'Username is invalid. It must be a valid email!';
   }
   if (!input.password) {
     errors.password = 'Password is required'
@@ -17,7 +15,9 @@ export function validate(input){
   }
   return errors;
 }
+
 export default function Form() {
+
   //No escalable
   // const [username, setUsername] = React.useState('');
   // const [password, setPassword] = React.useState('');
@@ -28,48 +28,56 @@ export default function Form() {
     username: '',
     password: ''
   });
+
   const [errors, setErrors] = React.useState({});
 
   const handleInputChange = function(e) {
-    setErrors(validate({
-      ...input,
-      [e.target.name]: e.target.value
-    }));
     setInput({
       ...input,
       [e.target.name]: e.target.value
     });
   }
   
+  const handleInputOnBlur = function(e) {
+  setErrors(validate({
+    ...input,
+    [e.target.name]: e.target.value
+  }));
+}
 
   return (
-    <form>
+    <>
+    <h1 style={{margin: "2rem"}}>Login:</h1>
+    <form style={{margin: "2rem"}}>
       <div>
         <label>Username:</label>
         <input 
-          className={`${errors.username && 'danger'}`} 
-          type="text" name="username" 
+          className={`${errors.username ? 'danger' : 'success'}`} 
+          type="email" name="username" 
           value={input.username} 
-          onChange={handleInputChange} 
+          onChange={handleInputChange}
+          onBlur={handleInputOnBlur} 
         />
         {
-          errors.username && <p className="danger">{errors.username}</p>
+          errors.username ? <p className="danger">{errors.username}</p> : <p className="success">Good, The force is stronger in you!</p>
         }
       </div>
       <div>
         <label>Password:</label>
         <input 
-          className={`${errors.password && 'danger'}`} 
+          className={`${errors.password ? 'danger' : 'success'}`} 
           type="password" name="password" 
           value={input.password} 
           onChange={handleInputChange}
+          onBlur={handleInputOnBlur}
         />
         {
-          errors.password ? <p className="danger">{errors.password}</p> : null
+          errors.password ? <p className="danger">{errors.password}</p> : <p className="success">Good, good, a powerfull Jedi you will become!</p>
         }
       </div>
+      <br />
       <input type="submit" />
     </form>
-
+    </>
   );
 }

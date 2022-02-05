@@ -17,6 +17,15 @@ p.danger {
   font-size: 10px;
 }
 
+p.success {
+  color: green;
+  font-size: 10px;
+}
+
 input.danger {
   border: 2px solid red;
+}
+
+input.success {
+  border: 2px solid green;
 }

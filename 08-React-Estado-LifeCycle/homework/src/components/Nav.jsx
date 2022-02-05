@@ -19,12 +19,12 @@ function NavBar({ onSearch }) {
       Henry-Weather App
     </Navbar.Brand>
   </Navbar>
-      <Navbar.Collapse id="basic-navbar-nav">
+      {/* <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           
         </Nav>
+      </Navbar.Collapse> */}
         <SearchBar onSearch={onSearch}/>
-      </Navbar.Collapse>
     </Navbar>
   );
 }

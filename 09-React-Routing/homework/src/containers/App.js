@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Route, Switch, NavLink, HashRouter as Router } from "react-router-dom";
+import { Route} from "react-router-dom";
 
 import "./App.css";
 import Nav from "../components/Nav.jsx";
@@ -7,12 +7,13 @@ import Cards from "../components/Cards.jsx";
 import About from "../components/About.jsx"
 import Ciudad from "../components/Ciudad.jsx"
 
-const apiKey = "4ae2636d8dfbdc3044bede63951a019b";
+//const apiKey = "4ae2636d8dfbdc3044bede63951a019b";
+const apiKey = '0e78152cb9c1b723e06bf55643633fd5';
 
 function App() {
   const [cities, setCities] = useState([]);
   function onClose(id) {
-    setCities((oldCities) => oldCities.filter((c) => c.id != id));
+    setCities((oldCities) => oldCities.filter((c) => c.id !== id));
   }
   function onSearch(ciudad) {
     //Llamado a la API del clima
@@ -41,14 +42,8 @@ function App() {
         }
       });
   }
-  function onFilter(ciudadId) {
-    let ciudad = cities.filter((c) => c.id == parseInt(ciudadId));
-    if (ciudad.length > 0) {
-      return ciudad[0];
-    } else {
-      return null;
-    }
-  }
+
+ 
   return (
     <div className="App">
       <Route path="/" render={() => <Nav onSearch={onSearch} />} />
@@ -62,7 +57,7 @@ function App() {
             exact
             path='/ciudad/:ciudadId'
             render={({match}) => <Ciudad
-                  city={cities.filter(c => c.id === parseInt(match.params.ciudadId))}
+                  city={cities.filter(c => c.id === parseInt(match.params.ciudadId))} 
                 />}
         />
       </div>

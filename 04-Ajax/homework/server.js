@@ -50,6 +50,7 @@ let amigos = [
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/amigos", (req, res) => {
   res.status(200).json(amigos);
@@ -64,9 +65,10 @@ app.get("/amigos/:id", function(req, res)  {
 });
 
 app.post("/amigos", (req, res) => {
+  console.log(req.body);
   const friend = { id: getNewId(), ...req.body };
   amigos = [...amigos, friend];
-  res.status(201).json(amigos);
+  res.status(200).json(friend);
 });
 
 app.put("/amigos/:id", (req, res) => {

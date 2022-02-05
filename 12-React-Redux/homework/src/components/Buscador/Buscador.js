@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { NavLink } from 'react-router-dom';
 import './Buscador.css';
+import {addMovieFavorite, getMovies} from '../../actions';
 
 
 
@@ -17,6 +18,7 @@ export class Buscador extends Component {
   }
   handleSubmit(event) {
     event.preventDefault();
+    this.props.getMovies(this.state.title);
   }
 
   render() {
@@ -38,11 +40,42 @@ export class Buscador extends Component {
           <button type="submit">BUSCAR</button>
         </form>
         <ul>
-         {/* Aqui tienes que escribir tu codigo para mostrar la lista de peliculas */}
+         {this.props.movies.map(el => {
+           return (
+           <li key={el.imdbID}>
+             <NavLink to={`/movie/${el.imdbID}`}>
+             {el.Title + " | "+ el.Year}
+             </NavLink>
+             <br />
+             <div><img src={el.Poster} alt="image not found"/></div>
+             <br />
+             <button onClick={() => this.props.addMovieFavorite(
+               {
+                 Title: el.Title,
+                 id: el.imdbID,
+                 Poster: el.Poster
+               }
+             )}>Agregar a Favoritos</button>
+           </li>
+         )})
+        } 
         </ul>
       </div>
     );
   }
 }
 
-export default Buscador;
+function mapStateToProps(state) {
+  return {
+    movies: state.moviesLoaded
+  }
+}
+
+function mapDispatchToProps(dispatch){
+  return {
+    addMovieFavorite: movie => dispatch(addMovieFavorite(movie)),
+    getMovies: title => dispatch(getMovies(title))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Buscador);
